@@ -1,10 +1,7 @@
 package pageobjects;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidElement;
 import org.openqa.selenium.By;
-
-import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.WebElement;
 
 
@@ -55,10 +52,11 @@ public class LoginPage extends PageBase {
      * @param userName - User Name.
      * @param password -Password.
      */
-    public void login(String userName, String password) {
+    public EriBankMainPage login(String userName, String password) {
         usernameElement.sendKeys(userName);
         passwordElement.sendKeys(password);
         loginButtonElement.click();
+        return new EriBankMainPage(driver);
     }
 
 }

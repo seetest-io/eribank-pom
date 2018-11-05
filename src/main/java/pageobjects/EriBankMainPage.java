@@ -2,9 +2,6 @@ package pageobjects;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
-
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
 import org.openqa.selenium.WebElement;
 
 import java.util.NoSuchElementException;
@@ -12,36 +9,32 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Class representing the Main Menu Page for Eribank.
+ * Class representing the Main Menu Page for Eribank Applications.
  */
 public class EriBankMainPage extends PageBase {
 
     private WebElement makePaymentButton;
     private WebElement balanceElement;
-    private PageBase makePaymentPage;
+    private MakePaymentsPage makePaymentPage;
 
     /**
      * Constructor.
      * @param driver1 Driver instance.
      */
-    public EriBankMainPage(AppiumDriver driver1) {
+    EriBankMainPage(AppiumDriver driver1) {
         super(driver1);
-        makePaymentButton = driver.findElement(By.xpath("//*[@id='makePaymentButton']"));
         initialized = true;
     }
 
-
     /**
-     * Make Payment Implementation.
-     * @param phoneText Phone Number.
-     * @param nameText Name.
-     * @param amountText Amount.
-     * @param countryText Country.
+     * Gets the Make Payments Page.
+     * @return makePaymentPage Return Make Payments Page.
      */
-    public void makePayment(String phoneText, String nameText , String amountText, String countryText) {
+    public MakePaymentsPage getMakePaymentsPage() {
+        makePaymentButton = driver.findElement(By.xpath("//*[@id='makePaymentButton']"));
         makePaymentButton.click();
         makePaymentPage = new MakePaymentsPage(this.driver);
-        ((MakePaymentsPage)makePaymentPage).makePayment(phoneText, nameText , amountText, countryText);
+        return makePaymentPage;
     }
 
     /**
@@ -58,5 +51,4 @@ public class EriBankMainPage extends PageBase {
             throw new NoSuchElementException("Current Balance Not Found");
         }
     }
-
 }

@@ -2,16 +2,13 @@ package pageobjects;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
-
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
 import org.openqa.selenium.WebElement;
 
 /**
- * Page class representing Payments menu.
+ * Page class representing Make Payments Page.
  */
 
-class MakePaymentsPage extends PageBase {
+public class MakePaymentsPage extends PageBase {
 
     private WebElement makePaymentButton;
     private WebElement phoneTextField;
@@ -39,9 +36,9 @@ class MakePaymentsPage extends PageBase {
      * @param phoneText Phone.
      * @param nameText Name.
      * @param amountText Amount.
-     * @param countryText Country.s
+     * @param countryText Country.
      */
-    void makePayment(String phoneText, String nameText , String amountText, String countryText) {
+    public void makePayment(String phoneText, String nameText , String amountText, String countryText) {
         phoneTextField.sendKeys(phoneText);
         nameTextField.sendKeys(nameText);
         amountTextField.sendKeys(amountText);

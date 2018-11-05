@@ -44,11 +44,11 @@ public class TestBase {
         this.initDefaultDesiredCapabilities();
         dc.setCapability("testName", testContext.getCurrentXmlTest().getName());
         if (os.equals("android")) {
-            dc.setCapability(MobileCapabilityType.APP, androidAppName);
+            dc.setCapability(MobileCapabilityType.APP, "cloud:"+androidAppName);
             dc.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, ".LoginActivity");
             this.initAndroidDriver(dc);
         } else {
-            dc.setCapability(MobileCapabilityType.APP, iosAppName);
+            dc.setCapability(MobileCapabilityType.APP, "cloud:"+iosAppName);
             this.initIOSDriver(dc);
         }
     }
@@ -61,7 +61,7 @@ public class TestBase {
         LOGGER.info("Setting up Desired Capabilities");
         accessKey = System.getenv("SEETEST_IO_ACCESS_KEY");
 
-        if (accessKey.length() < 10) {
+        if (accessKey == null || accessKey.length() < 10) {
             LOGGER.error("Access key must be set in Environment variable SEETEST_IO_ACCESS_KEY");
             LOGGER.info("To get access get to to https://cloud.seetest.io or learn at https://docs.seetest.io/display/SEET/Execute+Tests+on+SeeTest+-+Obtaining+Access+Key", accessKey);
             throw new RuntimeException("Access key invalid : accessKey - " + accessKey);
@@ -114,8 +114,8 @@ public class TestBase {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        iosAppName = "cloud:"+ String.valueOf(properties.get("ios.app.name").toString());
-        androidAppName = "cloud:" + String.valueOf(properties.get("android.app.name"));
+        iosAppName = String.valueOf(properties.get("ios.app.name").toString());
+        androidAppName = String.valueOf(properties.get("android.app.name"));
         os = String.valueOf(properties.get("os"));
         seetestCloudURL = String.valueOf(properties.get("seetest.cloud.url"));
     }
