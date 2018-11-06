@@ -39,5 +39,5 @@ task runTests(type: JavaExec, dependsOn: 'classes') {
             project.sourceSets.test.compileClasspath,
             project.sourceSets.main.runtimeClasspath,
             project.sourceSets.test.runtimeClasspath)
-    args = ["./testng.xml"]
+    args = ["./src/main/java/testng.xml"]
 }
