@@ -6,6 +6,7 @@ import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
+import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.impl.Log4jLoggerFactory;
@@ -49,6 +50,7 @@ public class TestBase {
             this.initAndroidDriver(dc);
         } else {
             dc.setCapability(MobileCapabilityType.APP, "cloud:"+iosAppName);
+            dc.setCapability(IOSMobileCapabilityType.BUNDLE_ID, iosAppName);
             this.initIOSDriver(dc);
         }
     }
