@@ -13,8 +13,8 @@ import java.util.regex.Pattern;
  */
 public class EriBankMainPage extends PageBase {
 
-    private WebElement makePaymentButton;
-    private WebElement balanceElement;
+    private By makePaymentButton = By.xpath("//*[@id='makePaymentButton']");
+    private By balanceElement = By.xpath("//*[contains(text(),\"$\")]");
     private MakePaymentsPage makePaymentPage;
 
     /**
@@ -31,8 +31,7 @@ public class EriBankMainPage extends PageBase {
      * @return makePaymentPage Return Make Payments Page.
      */
     public MakePaymentsPage getMakePaymentsPage() {
-        makePaymentButton = driver.findElement(By.xpath("//*[@id='makePaymentButton']"));
-        makePaymentButton.click();
+        driver.findElement(makePaymentButton).click();
         makePaymentPage = new MakePaymentsPage(this.driver);
         return makePaymentPage;
     }
@@ -42,7 +41,7 @@ public class EriBankMainPage extends PageBase {
      * @return Current balance.
      */
     public int getCurrentBalance() throws NoSuchElementException {
-        String balanceField = driver.findElement(By.xpath("//*[contains(text(),\"$\")]")).getText();
+        String balanceField = driver.findElement(balanceElement).getText();
         Pattern pattern = Pattern.compile("\\d{1,10}");
         Matcher matcher = pattern.matcher(balanceField);
         if (matcher.find()) {

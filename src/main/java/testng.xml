@@ -2,7 +2,15 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="EribankTests" verbose="2">
 
-   <test name="EribankTests">
+   <test name="AndroidEribankTests">
+      <parameter name = "os" value="android"/>
+      <classes>
+
+         <class name="tests.EriBankTests"/>
+      </classes>
+   </test>
+   <test name="IOSEribankTests">
+      <parameter name = "os" value="ios"/>
       <classes>
          <class name="tests.EriBankTests"/>
       </classes>

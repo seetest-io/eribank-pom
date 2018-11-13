@@ -16,46 +16,23 @@ public class LoginPage extends PageBase {
      */
     public LoginPage(AppiumDriver driver1) {
         super(driver1);
-        findUserNameElement();
-        findPasswordElement();
-        findLoginButtonElement();
         this.initialized = true;
     }
 
-    private WebElement usernameElement;
-    private WebElement passwordElement;
-    private WebElement loginButtonElement;
-
-    /**
-     * Finds the User Name Element.
-     */
-    private void findUserNameElement() {
-        usernameElement = driver.findElement(By.xpath("//*[@id='usernameTextField']"));
-    }
-
-    /**
-     * Finds the User Name Element.
-     */
-    private void findPasswordElement() {
-        passwordElement = driver.findElement(By.xpath("//*[@id='passwordTextField']"));
-    }
-
-    /**
-     * Finds the User Name Element.
-     */
-    private void findLoginButtonElement() {
-        loginButtonElement = driver.findElement(By.xpath("//*[@id='loginButton']"));
-    }
+    private By usernameBy = By.xpath("//*[@id='usernameTextField']");
+    private By passwordBy = By.xpath("//*[@id='passwordTextField']");
+    private By loginButtonBy = By.xpath("//*[@id='loginButton']");
 
     /**
      * Login to the Eri Bank page.
      * @param userName - User Name.
      * @param password -Password.
+     * @return EriBankMainPage. Returns the Eribank main page.
      */
     public EriBankMainPage login(String userName, String password) {
-        usernameElement.sendKeys(userName);
-        passwordElement.sendKeys(password);
-        loginButtonElement.click();
+        driver.findElement(usernameBy).sendKeys(userName);
+        driver.findElement(passwordBy).sendKeys(password);
+        driver.findElement(loginButtonBy).click();
         return new EriBankMainPage(driver);
     }
 

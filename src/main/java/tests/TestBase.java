@@ -22,6 +22,8 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.Properties;
 import org.slf4j.Logger;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 
 /**
  * Base class for all Eribank tests.
@@ -38,9 +40,11 @@ public class TestBase {
     private String os;
     private String seetestCloudURL;
 
+    @Parameters("os")
     @BeforeClass
-    public void setUp(ITestContext testContext) {
+    public void setUp(@Optional("android") String os, ITestContext testContext) {
         LOGGER.info("Enter TestBase setUp");
+        this.os = os;
         this.loadInitProperties();
         this.initDefaultDesiredCapabilities();
         dc.setCapability("testName", testContext.getCurrentXmlTest().getName());
@@ -107,6 +111,7 @@ public class TestBase {
      * Loads properties.
      */
     private void loadInitProperties() {
+        LOGGER.info("Enter loadInitProperties() ...");
         String pathToProperties = Objects.requireNonNull(this.getClass().getClassLoader().getResource("seetest.properties")).getFile();
         Properties properties = new Properties();
         try (FileReader fr = new FileReader(pathToProperties)) {
@@ -116,10 +121,13 @@ public class TestBase {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        properties.entrySet().stream()
+                .forEach( (entry) -> LOGGER.info("Key = " + entry.getKey() +  " ; Value = "  + entry.getValue()));
         iosAppName = String.valueOf(properties.get("ios.app.name").toString());
         androidAppName = String.valueOf(properties.get("android.app.name"));
-        os = String.valueOf(properties.get("os"));
         seetestCloudURL = String.valueOf(properties.get("seetest.cloud.url"));
+        LOGGER.info("Exit loadInitProperties() ...");
     }
 
     @AfterClass
