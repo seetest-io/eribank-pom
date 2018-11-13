@@ -5,7 +5,6 @@
    <test name="AndroidEribankTests">
       <parameter name = "os" value="android"/>
       <classes>
-
          <class name="tests.EriBankTests"/>
       </classes>
    </test>

@@ -1,4 +1,4 @@
-package pageobjects;
+package pages;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
@@ -11,12 +11,17 @@ import java.util.regex.Pattern;
  */
 public class EriBankMainPage extends PageBase {
 
+    @Override
+    public boolean verify() {
+        return (driver.findElements(ELEMENTS.BALANCE.getBy()).size() > 0);
+    }
+
     /**
      * All Elements for this Page.
      */
     private enum ELEMENTS {
         MAKE_PAYMENT_BUTTON ("//*[@id='makePaymentButton']"),
-        BALANCE("//*[contains(text(),\"$\")]");
+        BALANCE("//*[contains(text(),'$')]");
 
         private String location;
         /**
@@ -38,18 +43,17 @@ public class EriBankMainPage extends PageBase {
 
     /**
      * Constructor.
-     * @param driver1 Driver instance.
+     * @param driver Driver instance.
      */
-    EriBankMainPage(AppiumDriver driver1) {
-        super(driver1);
-        initialized = true;
+    EriBankMainPage(AppiumDriver driver) {
+        super(driver);
     }
 
     /**
      * Gets the Make Payments Page.
      * @return makePaymentPage Return Make Payments Page.
      */
-    public MakePaymentsPage getMakePaymentsPage() {
+    public MakePaymentsPage navigateToMakePaymentPage() {
         driver.findElement(ELEMENTS.MAKE_PAYMENT_BUTTON.getBy()).click();
         return new MakePaymentsPage(this.driver);
     }

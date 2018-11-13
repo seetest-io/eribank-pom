@@ -1,12 +1,9 @@
 package tests;
 
+import com.experitest.appium.SeeTestCapabilityType;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.ios.IOSElement;
-import io.appium.java_client.remote.AndroidMobileCapabilityType;
-import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.impl.Log4jLoggerFactory;
@@ -14,124 +11,90 @@ import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Objects;
 import java.util.Properties;
+
 import org.slf4j.Logger;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
+import utils.SeeTestProperties;
 
 /**
  * Base class for all Eribank tests.
  */
 public class TestBase {
 
+    public static final String ENV_VAR_ACCESS_KEY = "SEETEST_IO_ACCESS_KEY";
+    public static final boolean FULL_RESET = true;
+    public static final boolean INSTRUMENT_APP = true;
+
+
     private DesiredCapabilities dc = new DesiredCapabilities();
     AppiumDriver driver = null;
     private String accessKey = null;
     Logger LOGGER = new Log4jLoggerFactory().getLogger(this.getClass().getName());
 
-    private String iosAppName;
-    private String androidAppName;
+    protected Properties properties = new Properties();
     private String os;
-    private String seetestCloudURL;
 
     @Parameters("os")
     @BeforeClass
     public void setUp(@Optional("android") String os, ITestContext testContext) {
         LOGGER.info("Enter TestBase setUp");
         this.os = os;
-        this.loadInitProperties();
+        properties = SeeTestProperties.getSeeTestProperties();
+        dc.setCapability(SeeTestCapabilityType.TEST_NAME, testContext.getCurrentXmlTest().getName());
         this.initDefaultDesiredCapabilities();
-        dc.setCapability("testName", testContext.getCurrentXmlTest().getName());
-        if (os.equals("android")) {
-            dc.setCapability(MobileCapabilityType.APP, "cloud:"+androidAppName);
-            dc.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, ".LoginActivity");
-            this.initAndroidDriver(dc);
-        } else {
-            dc.setCapability(MobileCapabilityType.APP, "cloud:"+iosAppName);
-            dc.setCapability(IOSMobileCapabilityType.BUNDLE_ID, iosAppName);
-            this.initIOSDriver(dc);
-        }
+        driver = os.equals("android") ?
+                new AndroidDriver(SeeTestProperties.SEETEST_IO_APPIUM_URL, dc) :
+                new IOSDriver(SeeTestProperties.SEETEST_IO_APPIUM_URL, dc);
     }
 
-    /**
-     * Initialize default properties.
-     *
-     */
-    private void initDefaultDesiredCapabilities() {
-        LOGGER.info("Setting up Desired Capabilities");
-        accessKey = System.getenv("SEETEST_IO_ACCESS_KEY");
-
-        if (accessKey == null || accessKey.length() < 10) {
-            LOGGER.error("Access key must be set in Environment variable SEETEST_IO_ACCESS_KEY");
-            LOGGER.info("To get access get to to https://cloud.seetest.io or learn at https://docs.seetest.io/display/SEET/Execute+Tests+on+SeeTest+-+Obtaining+Access+Key", accessKey);
-            throw new RuntimeException("Access key invalid : accessKey - " + accessKey);
-        }
-        dc.setCapability("accessKey", accessKey);
-        dc.setCapability("fullReset", true);
-        dc.setCapability("instrumented", true);
-        String query = "@os='" + os + "'";
-        dc.setCapability("deviceQuery", query);
-        LOGGER.info("Device Query = {}",query);
-        LOGGER.info("Desired Capabilities setup complete");
-    }
-
-    /**
-     * Gets the Android Driver.
-     */
-    private void initAndroidDriver(DesiredCapabilities dc) {
-        try {
-            LOGGER.info("Initializing Android Driver ...");
-            driver = new AndroidDriver<AndroidElement>(new URL(seetestCloudURL), dc);
-            LOGGER.info("Android Driver Initialized ...");
-        } catch (MalformedURLException malformedExc) {
-            LOGGER.error("Cannot load the driver");
-        }
-    }
-
-    /**
-     * Gets the IOS Driver.
-     */
-    private void initIOSDriver(DesiredCapabilities dc) {
-        try {
-            LOGGER.info("Initializing IOS Driver ...");
-            driver = new IOSDriver<IOSElement>(new URL(seetestCloudURL), dc);
-            LOGGER.info("IOS Driver Initialized ...");
-        } catch (MalformedURLException malformedExc) {
-            LOGGER.error("Cannot load the driver");
-        }
-    }
-
-    /**
-     * Loads properties.
-     */
-    private void loadInitProperties() {
-        LOGGER.info("Enter loadInitProperties() ...");
-        String pathToProperties = Objects.requireNonNull(this.getClass().getClassLoader().getResource("seetest.properties")).getFile();
-        Properties properties = new Properties();
-        try (FileReader fr = new FileReader(pathToProperties)) {
-            properties.load(fr);
-        } catch (FileNotFoundException e) {
-            LOGGER.warn("Could not load init properties", pathToProperties, e);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        properties.entrySet().stream()
-                .forEach( (entry) -> LOGGER.info("Key = " + entry.getKey() +  " ; Value = "  + entry.getValue()));
-        iosAppName = String.valueOf(properties.get("ios.app.name").toString());
-        androidAppName = String.valueOf(properties.get("android.app.name"));
-        seetestCloudURL = String.valueOf(properties.get("seetest.cloud.url"));
-        LOGGER.info("Exit loadInitProperties() ...");
-    }
 
     @AfterClass
     protected void tearDown() {
         driver.quit();
     }
+
+
+    /**
+     * Initialize default properties.
+     */
+    private void initDefaultDesiredCapabilities() {
+        LOGGER.info("Setting up Desired Capabilities");
+        accessKey = System.getenv(ENV_VAR_ACCESS_KEY);
+
+        if (accessKey == null || accessKey.length() < 10) {
+            LOGGER.error("Access key must be set in Environment variable {}", ENV_VAR_ACCESS_KEY);
+            LOGGER.info("To get access get to to https://cloud.seetest.io or learn at https://docs.seetest.io/display/SEET/Execute+Tests+on+SeeTest+-+Obtaining+Access+Key", accessKey);
+            throw new RuntimeException("Access key invalid : accessKey - " + accessKey);
+        }
+
+        this.setAppCapability(os);
+        dc.setCapability(SeeTestCapabilityType.ACCESS_KEY, accessKey);
+
+        dc.setCapability(MobileCapabilityType.FULL_RESET, FULL_RESET);
+        dc.setCapability(SeeTestCapabilityType.INSTRUMENT_APP, INSTRUMENT_APP);
+        String query = String.format("@os='%s'", os);
+        dc.setCapability(SeeTestCapabilityType.DEVICE_QUERY, query);
+
+        LOGGER.info("Device Query = {}", query);
+        LOGGER.info("Desired Capabilities setup complete");
+    }
+
+
+    /**
+     * sets the application ("app") capability based on the OS and the property which was defined in the seetest.properties file
+     *
+     * @param os
+     */
+    private void setAppCapability(@Optional("android") String os) {
+        String appName = os.equals("android") ?
+                properties.getProperty(SeeTestProperties.Names.ANDROID_APP_NAME) :
+                properties.getProperty(SeeTestProperties.Names.IOS_APP_NAME);
+
+        appName = String.format("%s%s", "cloud:", appName);
+        LOGGER.info("Setting up {} as app capability", appName);
+        dc.setCapability(MobileCapabilityType.APP, appName);
+    }
+
 }
