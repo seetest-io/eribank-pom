@@ -28,7 +28,6 @@ public class SeeTestProperties {
     public static class Names {
         public static final String ANDROID_APP_NAME = "android.app.name";
         public static final String IOS_APP_NAME = "ios.app.name";
-        public static final String ACCESS_KEY = "seetest.io.accesskey";
 
     }
 
