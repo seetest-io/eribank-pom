@@ -21,7 +21,7 @@ public class EriBankMainPage extends PageBase {
         private String location;
         /**
          * Constructor.
-         * @param location
+         * @param location - Location String.
          */
         ELEMENTS(String location) {
             this.location = location;
@@ -29,14 +29,12 @@ public class EriBankMainPage extends PageBase {
 
         /**
          * Gets the By Object.
-         * @return
+         * @return by object.
          */
         public By getBy() {
             return By.xpath(location);
         }
     }
-
-    private MakePaymentsPage makePaymentPage;
 
     /**
      * Constructor.
@@ -53,8 +51,7 @@ public class EriBankMainPage extends PageBase {
      */
     public MakePaymentsPage getMakePaymentsPage() {
         driver.findElement(ELEMENTS.MAKE_PAYMENT_BUTTON.getBy()).click();
-        makePaymentPage = new MakePaymentsPage(this.driver);
-        return makePaymentPage;
+        return new MakePaymentsPage(this.driver);
     }
 
     /**
