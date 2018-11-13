@@ -36,8 +36,6 @@ public class EriBankMainPage extends PageBase {
         }
     }
 
-    private By makePaymentButton = By.xpath("//*[@id='makePaymentButton']");
-    private By balanceElement = By.xpath("//*[contains(text(),\"$\")]");
     private MakePaymentsPage makePaymentPage;
 
     /**
