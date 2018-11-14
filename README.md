@@ -31,15 +31,16 @@ This example will cover:
 
 4. To run the tests,
     
-    Make sure you set the environment variable with valid access key obtained using Step 2.
+    Please ensure that following environment variables are set.
+
+    1. JAVA_HOME to JDK/JRE HOME and update it in the PATH variable.
+    2. SEETEST_IO_ACCESS_KEY to valid access key obtained before in Step 2.
     
-    Use the command line to set Environment variable.
-    
-	```
-	set SEETEST_IO_ACCESS_KEY = <your access key>
-	``` 
+        ```
+	    set SEETEST_IO_ACCESS_KEY = <your access key>
+	    ```
 	
-    Use the command line run the test as below,
+    Now run the tests using following command in command line.
     
 	```
 	gradlew runTests
