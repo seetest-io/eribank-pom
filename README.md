@@ -54,7 +54,7 @@ This example will cover:
 
 1. Upload you application to the cloud
 
-(review step two in guide)
+   (review step two in guide)
 
 2. Change the android application name or iOS application name in the src/main/java/resources/seetest.properties file
 
