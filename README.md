@@ -29,25 +29,25 @@ This example will cover:
     Go to the cloud "Mobile Application Center" and upload both apps 
     https://cloud.seetest.io/index.html#/applications
 
-4. To Run the the tests use testng.xml file
+4. To run the tests,
     
     Make sure you set the environment variable with valid access key obtained using Step 2.
     
-    Use the command line set Environment variable.
+    Use the command line to set Environment variable.
     
 	```
 	set SEETEST_IO_ACCESS_KEY = <your access key>
 	``` 
 	
-    Use the command line run the test as below
+    Use the command line run the test as below,
     
 	```
 	gradlew runTests
 	```
     
     ### Note : 
-    If you are using IDE like IntelliJ, make sure you create a Run configuration to use testng.xml. 
-    Set the Enviornment variable and then proceed to execute the test.
+    If you are using IDE like IntelliJ, make sure you create a Run configuration to use /src/main/java/testng.xml.
+    Set the Environment variable and then proceed to execute the test.
 
 ### How to change to your own application
 
@@ -55,7 +55,7 @@ This example will cover:
 
 (review step two in guide)
 
-2. Change the android application name or iOS application name in the /src/main/java/resources/seetest.properties file
+2. Change the android application name or iOS application name in the src/main/java/resources/seetest.properties file
 
     For IOS,
     
@@ -71,7 +71,7 @@ This example will cover:
 
 3. Modify the tests
 
-change the @Test methods at EriBankTests
+Change the @Test methods in EriBankTests source.
 
-you can paste the code you've exported from SeeTestAutomation
+You can paste the code you've exported from SeeTestAutomation
 
