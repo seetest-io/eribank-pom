@@ -35,11 +35,11 @@ This example will cover:
 
     1. JAVA_HOME to JDK/JRE HOME and update it in the PATH variable.
     2. SEETEST_IO_ACCESS_KEY to valid access key obtained before in Step 2.
-    
+
         ```
 	    set SEETEST_IO_ACCESS_KEY = <your access key>
 	    ```
-	
+
     Now run the tests using following command in command line.
     
 	```
