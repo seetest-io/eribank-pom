@@ -49,6 +49,8 @@ This example will cover:
     ### Note : 
     If you are using IDE like IntelliJ, make sure you create a Run configuration to use src/main/java/testng.xml.
     Set the Environment variable for access key and then proceed to execute the test.
+	
+	![Scheme](images/IntelliJ_Run_Conf.gif)
 
 ### How to change to your own application
 
