@@ -13,7 +13,7 @@ public class EriBankMainPage extends PageBase {
 
     @Override
     public boolean verify() {
-        return (driver.findElements(ELEMENTS.BALANCE.getBy()).size() > 0);
+        return (driver.findElements(ELEMENTS.MAKE_PAYMENT_BUTTON.getBy()).size() > 0);
     }
 
     /**

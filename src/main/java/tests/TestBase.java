@@ -73,7 +73,6 @@ public class TestBase {
         dc.setCapability(SeeTestCapabilityType.ACCESS_KEY, accessKey);
 
         dc.setCapability(MobileCapabilityType.FULL_RESET, FULL_RESET);
-        dc.setCapability(SeeTestCapabilityType.INSTRUMENT_APP, INSTRUMENT_APP);
         String query = String.format("@os='%s'", os);
         dc.setCapability(SeeTestCapabilityType.DEVICE_QUERY, query);
 

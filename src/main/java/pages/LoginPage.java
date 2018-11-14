@@ -11,7 +11,7 @@ public class LoginPage extends PageBase {
 
     @Override
     public boolean verify() {
-        return (driver.findElements(ELEMENTS.LOGIN_BUTTON.getBy()).size() > 0);
+        return (driver.findElements(ELEMENTS.USERNAME.getBy()).size() > 0);
     }
 
     /**

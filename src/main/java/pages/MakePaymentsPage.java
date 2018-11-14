@@ -12,7 +12,7 @@ public class MakePaymentsPage extends PageBase {
 
     @Override
     public boolean verify() {
-        return (driver.findElements(ELEMENTS.NAME.getBy()).size() > 0);
+        return (driver.findElements(ELEMENTS.PHONE.getBy()).size() > 0);
     }
 
     /**
