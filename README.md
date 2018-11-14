@@ -31,7 +31,7 @@ This example will cover:
 
 4. To Run the the tests use testng.xml file
     
-    Make sure you set the envionment variable with valid access key obtained using Step 2.
+    Make sure you set the environment variable with valid access key obtained using Step 2.
     
     Use the command line set Environment variable.
     
@@ -69,9 +69,9 @@ This example will cover:
     android.app.name = com.company.app/.appActivity
     ```
 
-4. Modify the tests 
+3. Modify the tests
 
 change the @Test methods at EriBankTests
 
-you can paste the code you've exported from SeeTestAutomation 
+you can paste the code you've exported from SeeTestAutomation
 
